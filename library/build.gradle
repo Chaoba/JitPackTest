@@ -15,8 +15,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
+                abiFilters 'arm64-v8a', 'armeabi-v7a'
                 cppFlags "-frtti -fexceptions"
             }
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
     buildTypes {
