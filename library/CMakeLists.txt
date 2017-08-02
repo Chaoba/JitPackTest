@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.4.1)
 
 set(jnilibs "${CMAKE_SOURCE_DIR}/src/main/jniLibs")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${jnilibs}/${ANDROID_ABI})
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include)
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -21,6 +22,10 @@ add_library( # Sets the name of the library.
 
              # Provides a relative path to your source file(s).
              src/main/cpp/native-lib.cpp )
+
+add_library(layer1 SHARED IMPORTED )
+set_target_properties(layer1 PROPERTIES IMPORTED_LOCATION "${jnilibs}/${ANDROID_ABI}/liblayer1.so")
+
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -44,4 +49,4 @@ target_link_libraries( # Specifies the target library.
 
                        # Links the target library to the log library
                        # included in the NDK.
-                       ${log-lib} )
+                       ${log-lib} layer1)
